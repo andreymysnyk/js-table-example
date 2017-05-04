@@ -9,46 +9,47 @@
 <body>
 
     <div class="main">
-        <div class="title">
-            <span class="title-text">TableView</span>
+        <div class="header">
+            <span class="header-text">TableView</span>
         </div>
 
-        <div class="form-wrapper">
-            <div class="form-container">
-                <form action="" id="addRow" class="forms">
-                    <div class="row">
-                        <label for="date">Time</label>
-                        <input id="date" class="date" type="text">
-                    </div>
+        <div class="content">
+            <div class="form-wrapper">
+                <div class="form-container">
+                    <form action="" id="addRow" class="forms">
+                        <div class="row">
+                            <label for="date">Time</label>
+                            <input id="date" class="date" type="text">
+                        </div>
 
-                    <div class="row">
-                        <label for="text">Text</label>
-                        <textarea id="text" rows="5"></textarea>
-                    </div>
+                        <div class="row">
+                            <label for="text">Text</label>
+                            <textarea id="text" rows="5"></textarea>
+                        </div>
 
-                    <div class="row center">
-                        <input type="submit" class="addBtn" value="Submit">
-                    </div>
-                </form>
+                        <div class="row center">
+                            <input type="submit" class="addBtn" value="Submit">
+                        </div>
+                    </form>
+                </div>
             </div>
-        </div>
 
-        <div class="table-wrapper">
-            <table id="resultTable">
-                <thead>
+            <div class="table-wrapper">
+                <table id="resultTable">
+                    <thead>
                     <tr>
                         <th>Date</th>
                         <th>Text</th>
                     </tr>
-                </thead>
-
-                <tbody>
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
         </div>
+        <div class="footer">Vika Petrenko</div>
     </div>
 
-    <div class="footer">Vika Petrenko</div>
+
 
     <script src="submission.js"></script>
     <script>
