@@ -1,0 +1,80 @@
+html {
+    height: 100%;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(243, 240, 210, 0.42);
+}
+
+.footer {
+    clear: both;
+    background-color: #efefef;
+    text-align: center;
+    min-height: 50px;
+}
+
+.center {
+    text-align: center;
+}
+
+.main {
+    width: 100%;
+    height: 100%;
+    margin: 0 30px;
+}
+    .main .title {
+        padding: 10px;
+    }
+        .main .title .title-text {
+            font-size: 16pt;
+            font-weight: bold;
+        }
+.main .forms .row {
+    padding: 10px 0;
+}
+    .main .forms .row label,
+    .main .forms .row input,
+    .main .forms .row textarea {
+        vertical-align:middle;
+        box-sizing: border-box;
+        width: 100%;
+    }
+
+    .main .forms .row label {
+        min-width: 50px;
+    }
+    .main .forms .row .addBtn {
+        max-width: 50px;
+    }
+    .main .form-wrapper {
+        float: left;
+        width: 30%;
+        height: 100%;
+        box-sizing: border-box;
+
+        padding-right: 30px;
+    }
+        .main .form-wrapper .form-container {
+
+        }
+
+    .main .table-wrapper {
+        float: right;
+        width: 70%;
+        height: 100%;
+    }
+        .main .table-wrapper table {
+            border-collapse: collapse;
+            width: 100%;
+            height: 100%;
+        }
+            .main .table-wrapper table th,
+            .main .table-wrapper table td {
+                border: 1px solid black;
+            }
