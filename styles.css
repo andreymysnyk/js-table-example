@@ -21,7 +21,9 @@ body {
     clear: both;
     background-color: #efefef;
     text-align: center;
-    padding: 10px;
+    bottom: 0;
+    height: 35px;
+    line-height: 35px;
 }
 
 .center {
@@ -32,7 +34,7 @@ body {
 }
 
 .main .content {
-    padding: 20px;
+    padding: 0 20px;
 }
     .main .header {
         padding: 10px;
