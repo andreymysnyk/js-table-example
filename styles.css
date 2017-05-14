@@ -60,7 +60,7 @@ body {
         min-width: 50px;
     }
     .main .forms .row .addBtn {
-        max-width: 50px;
+        max-width: 100px;
     }
     .main .form-wrapper {
         float: left;
