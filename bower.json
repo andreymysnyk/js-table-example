@@ -1,0 +1,22 @@
+{
+  "name": "AndreyJSTable",
+  "authors": [
+    "Vika Petrenko <vika-miranet@yandex.ru>"
+  ],
+  "description": "Vika is working",
+  "main": "",
+  "license": "MIT",
+  "homepage": "",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "^3.3.7",
+    "eonasdan-bootstrap-datetimepicker": "^4.17.47"
+  }
+}
