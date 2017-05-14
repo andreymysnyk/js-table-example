@@ -16,9 +16,46 @@ class Submission {
     constructor(params) {
         this.root = params.form;
         this.table = params.table;
-        this.items = [];
 
+        this.map = new Map();
         this._setActions();
+    }
+
+    _clearTable() {
+        while(this.table.rows.length > 1) {
+            this.table.deleteRow(1);
+        }
+    }
+
+    _renderTable() {
+
+        this._clearTable();
+
+        this.map.forEach( (tasks, date, map) => {
+
+            let taskList = [];
+            tasks.forEach(dataModel => {
+                taskList.push(" - " + dataModel.text)
+            });
+
+            // insert row
+            let newRow = this.table.querySelector("tbody").insertRow(0);
+            newRow.insertCell(0).appendChild(document.createTextNode(date));
+
+            let tasksElement = document.createElement('p');
+            tasksElement.innerHTML =  taskList.join("<br/>")
+
+            newRow.insertCell(1).appendChild(tasksElement);
+        });
+    }
+
+    _sortList() {
+        this.map = new Map([...this.map.entries()].sort(function(a,b){
+            let date1 = moment(a[0], 'YYYY-MM-DD HH:mm');
+            let date2 = moment(b[0], 'YYYY-MM-DD HH:mm');
+
+            return date1 < date2
+        }));
     }
 
     _setActions() {
@@ -28,22 +65,19 @@ class Submission {
             e.preventDefault();
 
             let text = this.querySelector("#text").value;
-            let date = this.querySelector("#date").value;
-
+            let date = $('#datetimepicker').data("DateTimePicker").date();
             let dataModel = new DataModel(text, date);
 
-            self.items.push(dataModel);
+            // map
+            let dateKey = moment(date, 'YYYY-MM-DD HH:mm').format("YYYY-MM-DD");
 
-            //sort
-            self.items.sort((a, b) => +a.date > +b.date);
+            let currentTasks = self.map.get(dateKey);
+            currentTasks = currentTasks || [];
+            currentTasks.push(dataModel);
 
-            // find index
-            let itemIndex = self.items.findIndex(obj => obj.date == dataModel.date);
-
-            // insert row
-            var newRow = self.table.querySelector("tbody").insertRow(itemIndex);
-            newRow.insertCell(0).appendChild(document.createTextNode(dataModel.date));
-            newRow.insertCell(1).appendChild(document.createTextNode(dataModel.text));
+            self.map.set(dateKey, currentTasks);
+            self._sortList();
+            self._renderTable()
         })
     }
 }

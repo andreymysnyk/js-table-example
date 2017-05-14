@@ -60,18 +60,18 @@
         <div class="footer">Vika Petrenko</div>
     </div>
 
-
-    <script type="text/javascript">
-        $(function () {
-            $('#datetimepicker').datetimepicker();
-        });
-    </script>
     <script src="submission.js"></script>
     <script>
-        new Submission({
-            form: document.getElementById("addRow"),
-            table: document.getElementById("resultTable")
-        })
+        $(function () {
+            $('#datetimepicker').datetimepicker({
+                format: 'YYYY-MM-DD HH:mm'
+            });
+
+            new Submission({
+                form: document.getElementById("addRow"),
+                table: document.getElementById("resultTable")
+            })
+        });
     </script>
 
 </body>

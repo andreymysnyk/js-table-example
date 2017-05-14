@@ -86,5 +86,6 @@ body {
         }
             .main .table-wrapper table th,
             .main .table-wrapper table td {
+                padding: 5px;
                 border: 1px solid black;
             }
