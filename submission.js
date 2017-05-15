@@ -69,7 +69,7 @@ class Submission {
             let dataModel = new DataModel(text, date);
 
             // map
-            let dateKey = moment(date, 'YYYY-MM-DD HH:mm').format("YYYY-MM-DD");
+            let dateKey = moment(date, 'YYYY-MM-DD HH:mm').format("YYYY-MM-DD HH:mm");
 
             let currentTasks = self.map.get(dateKey);
             currentTasks = currentTasks || [];
