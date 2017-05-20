@@ -89,3 +89,6 @@ body {
                 padding: 5px;
                 border: 1px solid black;
             }
+            .main .table-wrapper table th:nth-child(1) {
+                width: 20%;
+            }
