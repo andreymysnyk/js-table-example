@@ -14,16 +14,23 @@
 </head>
 <body>
 
-    <div class="main">
-        <div class="header">
-            <span class="header-text">TableView</span>
+    <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">Table Test</a>
+            </div>
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="#">Home</a></li>
+            </ul>
         </div>
+    </nav>
 
+    <div class="main">
         <div class="content">
             <div class="form-wrapper">
                 <div class="form-container">
                     <form action="" id="addRow" class="forms">
-                        <div class="row">
+                        <div class="form-group">
                             <label for="date">Time</label>
                             <div class='input-group date' id='datetimepicker'>
                                 <input type='text' class="form-control" id="date"/>
@@ -33,20 +40,20 @@
                             </div>
                         </div>
 
-                        <div class="row">
+                        <div class="form-group">
                             <label for="text">Event</label>
-                            <textarea id="text" rows="5"></textarea>
+                            <textarea id="text" rows="5" class="form-control"></textarea>
                         </div>
 
                         <div class="row center">
-                            <input type="submit" class="addBtn" value="Submit">
+                            <button type="submit" class="btn btn-primary">Add event</button>
                         </div>
                     </form>
                 </div>
             </div>
 
             <div class="table-wrapper">
-                <table id="resultTable">
+                <table id="resultTable" class="table table-bordered table-striped">
                     <thead>
                     <tr>
                         <th>Date</th>

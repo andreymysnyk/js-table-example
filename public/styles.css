@@ -36,32 +36,9 @@ body {
 .main .content {
     padding: 0 20px;
 }
-    .main .header {
-        padding: 10px;
-        background-color: #ff991d;
-        margin-bottom: 20px;
-    }
-        .main .header .header-text {
-            font-size: 16pt;
-            font-weight: bold;
-        }
 .main .forms .row:nth-child(2) {
     padding: 10px 0;
 }
-    .main .forms .row label,
-    .main .forms .row input,
-    .main .forms .row textarea {
-        vertical-align:middle;
-        box-sizing: border-box;
-        width: 100%;
-    }
-
-    .main .forms .row label {
-        min-width: 50px;
-    }
-    .main .forms .row .addBtn {
-        max-width: 100px;
-    }
     .main .form-wrapper {
         float: left;
         width: 30%;
@@ -81,14 +58,8 @@ body {
         overflow: auto;
     }
         .main .table-wrapper table {
-            border-collapse: collapse;
             width: 100%;
         }
-            .main .table-wrapper table th,
-            .main .table-wrapper table td {
-                padding: 5px;
-                border: 1px solid black;
-            }
             .main .table-wrapper table th:nth-child(1) {
                 width: 20%;
             }
