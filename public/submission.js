@@ -4,6 +4,10 @@
 
 'use strict';
 
+const TIME_FORMAT_TIME = "HH:mm";
+const TIME_FORMAT_DATETIME = "YYYY-MM-DD HH:mm";
+const TIME_FORMAT_DATE = "YYYY-MM-DD";
+
 class DataModel {
     constructor(text, date) {
         this.date = date;
@@ -35,7 +39,8 @@ class Submission {
 
             let taskList = [];
             tasks.forEach(dataModel => {
-                taskList.push(" - " + dataModel.text)
+                let date = moment(dataModel.date, TIME_FORMAT_DATETIME).format(TIME_FORMAT_TIME);
+                taskList.push(`${date} - ${dataModel.text}`)
             });
 
             // insert row
@@ -43,18 +48,15 @@ class Submission {
             newRow.insertCell(0).appendChild(document.createTextNode(date));
 
             let tasksElement = document.createElement('p');
-            tasksElement.innerHTML =  taskList.join("<br/>")
+            tasksElement.innerHTML =  taskList.join("<br/>");
 
             newRow.insertCell(1).appendChild(tasksElement);
         });
-    }
+    };
 
-    _sortList() {
-        this.map = new Map([...this.map.entries()].sort(function(a,b){
-            let date1 = moment(a[0], 'YYYY-MM-DD HH:mm');
-            let date2 = moment(b[0], 'YYYY-MM-DD HH:mm');
-
-            return date1 < date2
+    _sortMap() {
+        this.map = new Map([...this.map.entries()].sort((a, b) => {
+            return moment(b[0], TIME_FORMAT_DATETIME) - moment(a[0], TIME_FORMAT_DATETIME);
         }));
     }
 
@@ -69,14 +71,17 @@ class Submission {
             let dataModel = new DataModel(text, date);
 
             // map
-            let dateKey = moment(date, 'YYYY-MM-DD HH:mm').format("YYYY-MM-DD HH:mm");
+            let dateKey = moment(date, TIME_FORMAT_DATETIME).format(TIME_FORMAT_DATE);
 
             let currentTasks = self.map.get(dateKey);
             currentTasks = currentTasks || [];
             currentTasks.push(dataModel);
+            currentTasks = currentTasks.sort((a,b) => {
+                return new Date(a.date).getTime() - new Date(b.date).getTime()
+            });
 
             self.map.set(dateKey, currentTasks);
-            self._sortList();
+            self._sortMap();
             self._renderTable()
         })
     }
