@@ -4,76 +4,20 @@
 
 'use strict';
 
-class BaseSchedule {
-
-    constructor() {
-        this.map = new Map();
-    }
-
-    getItem() {
-        this._sortList();
-        return this.map
-    }
-
-    _sortList() {
-        this.map = new Map([...this.map.entries()].sort(this._sortByDate));
-    }
-
-    _sortByDate(a, b) {}
-}
-
-class Schedule extends BaseSchedule {
-
-    add(date, event) {
-        let dateKey = moment(date, TIME_FORMAT_DATETIME).format(TIME_FORMAT_DATE);
-
-        let dateEvents = this.map.get(dateKey);
-        dateEvents = dateEvents || new DaySchedule();
-        dateEvents.add(date, event);
-
-        this.map.set(dateKey, dateEvents);
-    }
-
-    _sortByDate (a,b){
-        return new Date(b[0]).getTime() - new Date(a[0]).getTime()
-    };
-}
-
-class DaySchedule extends BaseSchedule {
-
-    add(date, event) {
-        let dateKey = moment(date, TIME_FORMAT_DATETIME).format(TIME_FORMAT_DATETIME);
-
-        let dateEvents = this.map.get(dateKey);
-        dateEvents = dateEvents || [];
-        dateEvents.push(event);
-
-        this.map.set(dateKey, dateEvents);
-    }
-
-    _sortByDate (a,b){
-        return new Date(a[0]).getTime() - new Date(b[0]).getTime()
-    };
-}
-
-class Event {
+class DataModel {
     constructor(text, date) {
         this.date = date;
         this.text = text;
     }
 }
 
-const TIME_FORMAT_TIME = "HH:mm";
-const TIME_FORMAT_DATETIME = "YYYY-MM-DD HH:mm";
-const TIME_FORMAT_DATE = "YYYY-MM-DD";
-
 class Submission {
 
     constructor(params) {
         this.root = params.form;
         this.table = params.table;
-        this.schedule = new Schedule();
 
+        this.map = new Map();
         this._setActions();
     }
 
@@ -87,14 +31,11 @@ class Submission {
 
         this._clearTable();
 
-        this.schedule.getItem().forEach( (daySchedule, date, map) => {
+        this.map.forEach( (tasks, date, map) => {
 
             let taskList = [];
-            daySchedule.getItem().forEach((tasks, date, map) => {
-                tasks.forEach(event => {
-                    let time = moment(event.date, TIME_FORMAT_DATETIME).format(TIME_FORMAT_TIME);
-                    taskList.push(`${time} - ${event.text}`)
-                });
+            tasks.forEach(dataModel => {
+                taskList.push(" - " + dataModel.text)
             });
 
             // insert row
@@ -102,10 +43,19 @@ class Submission {
             newRow.insertCell(0).appendChild(document.createTextNode(date));
 
             let tasksElement = document.createElement('p');
-            tasksElement.innerHTML =  taskList.join("<br/>");
+            tasksElement.innerHTML =  taskList.join("<br/>")
 
             newRow.insertCell(1).appendChild(tasksElement);
         });
+    }
+
+    _sortList() {
+        this.map = new Map([...this.map.entries()].sort(function(a,b){
+            let date1 = moment(a[0], 'YYYY-MM-DD HH:mm');
+            let date2 = moment(b[0], 'YYYY-MM-DD HH:mm');
+
+            return date1 < date2
+        }));
     }
 
     _setActions() {
@@ -116,11 +66,17 @@ class Submission {
 
             let text = this.querySelector("#text").value;
             let date = $('#datetimepicker').data("DateTimePicker").date();
-            let event = new Event(text, date);
+            let dataModel = new DataModel(text, date);
 
             // map
-            self.schedule.add(date, event);
+            let dateKey = moment(date, 'YYYY-MM-DD HH:mm').format("YYYY-MM-DD HH:mm");
 
+            let currentTasks = self.map.get(dateKey);
+            currentTasks = currentTasks || [];
+            currentTasks.push(dataModel);
+
+            self.map.set(dateKey, currentTasks);
+            self._sortList();
             self._renderTable()
         })
     }
