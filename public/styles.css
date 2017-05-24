@@ -1,94 +1,46 @@
-html, body, .main, .content {
-    width: 100%;
-    height: 100%;
-}
-html, .main, .main, .content {
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
-}
-
-html, body {
+* {
     margin: 0;
     padding: 0;
 }
 
-body {
-    background-color: rgba(243, 240, 210, 0.42);
+.header {
+    width: 100%;
+    height: 35px;
+    background-color: red;
 }
-
 .footer {
     clear: both;
-    background-color: #efefef;
+    background-color: #333;
+    color: #9d9d9d;
     text-align: center;
     bottom: 0;
     height: 35px;
     line-height: 35px;
 }
-
 .center {
     text-align: center;
 }
-
-.main {
-}
-
 .main .content {
-    padding: 0 20px;
+    min-height: calc(100vh - 55px); /* 35px footer + 20 margin bottom for header */
 }
-    .main .header {
-        padding: 10px;
-        background-color: #ff991d;
-        margin-bottom: 20px;
+    .main .content .main-content {
+        padding: 0 20px;
     }
-        .main .header .header-text {
-            font-size: 16pt;
-            font-weight: bold;
-        }
 .main .forms .row:nth-child(2) {
     padding: 10px 0;
 }
-    .main .forms .row label,
-    .main .forms .row input,
-    .main .forms .row textarea {
-        vertical-align:middle;
-        box-sizing: border-box;
-        width: 100%;
-    }
-
-    .main .forms .row label {
-        min-width: 50px;
-    }
-    .main .forms .row .addBtn {
-        max-width: 100px;
-    }
-    .main .form-wrapper {
-        float: left;
-        width: 30%;
-        height: 100%;
-        box-sizing: border-box;
-
-        padding-right: 30px;
-    }
-        .main .form-wrapper .form-container {
-
-        }
-
-    .main .table-wrapper {
-        float: right;
-        width: 70%;
-        height: 100%;
-        overflow: auto;
-    }
-        .main .table-wrapper table {
-            border-collapse: collapse;
-            width: 100%;
-        }
-            .main .table-wrapper table th,
-            .main .table-wrapper table td {
-                padding: 5px;
-                border: 1px solid black;
-            }
-            .main .table-wrapper table th:nth-child(1) {
-                width: 20%;
-            }
+.main .form-wrapper {
+    float: left;
+    width: 30%;
+    padding-right: 30px;
+}
+.main .table-wrapper {
+    float: right;
+    width: 70%;
+    height: 100%;
+    max-height: 550px;
+    overflow: auto;
+}
+.main .table-wrapper table th:nth-child(1) {
+    width: 20%;
+}
