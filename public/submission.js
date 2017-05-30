@@ -4,6 +4,7 @@
 
 'use strict';
 
+const API_URL = "/api/events";
 const TIME_FORMAT_TIME = "HH:mm";
 const TIME_FORMAT_DATETIME = "YYYY-MM-DD HH:mm";
 const TIME_FORMAT_DATE = "YYYY-MM-DD";
@@ -23,6 +24,36 @@ class Submission {
         this.tasks = [];
         this.map = new Map();
         this._setActions();
+        this._loadEvents();
+    }
+
+    _loadEvents() {
+        fetch(API_URL)
+            .then(response => response.json())
+            .then(items => {
+                items.forEach(item => {
+                    let dataModel = new DataModel(item.name, item.date);
+                    this.tasks.push(dataModel);
+                    this._renderTable();
+                });
+            })
+            .catch(e => console.log("Error: " + e));
+    }
+
+    _saveEvent(event) {
+        event.date = moment(event.date, TIME_FORMAT_DATETIME).format(TIME_FORMAT_DATETIME);
+
+        fetch(API_URL,
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(event)
+            })
+            .then(res => res.json())
+            .then(data => alert("Saved event " + data._id))
+            .catch(e => console.log("Error: " + e))
     }
 
     _clearTable() {
@@ -33,6 +64,8 @@ class Submission {
 
     _renderTable() {
 
+        this.tasks = this.tasks.sort(Submission._sortEvents);
+        this._setMap();
         this._clearTable();
 
         this.map.forEach( (tasks, date, map) => {
@@ -86,9 +119,8 @@ class Submission {
             let dataModel = new DataModel(text, date);
 
             self.tasks.push(dataModel);
-            self.tasks = self.tasks.sort(Submission._sortEvents);
+            self._saveEvent(dataModel);
 
-            self._setMap();
             self._renderTable()
         })
     }
