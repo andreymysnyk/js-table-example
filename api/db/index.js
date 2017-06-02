@@ -4,7 +4,7 @@ let mongoose = require('mongoose');
 let config = require('../config');
 
 // database URI
-let dbUrl = process.env.MONGOLAB_URI || process.env.MONGOHQ_URL || config.mongoose.uri;
+let dbUrl = process.env.MONGODB_URI || config.mongoose.uri;
 
 // connect to mongodb
 mongoose.connect(dbUrl, config.mongoose.options);
