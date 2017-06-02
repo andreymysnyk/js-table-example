@@ -1,3 +1,5 @@
+'use strict';
+
 let Event = require('../models').Event; // import mongoose event model
 let errorHandler = require('./errorHandler'); // import error handler decorator
 var express = require('express'); // import express framework

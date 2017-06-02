@@ -1,3 +1,5 @@
+'use strict';
+
 // import mongoose db obj
 let dbManager = require('../db');
 

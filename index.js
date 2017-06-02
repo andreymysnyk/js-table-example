@@ -1,8 +1,10 @@
-var express = require('express'); // import express framework
+'use strict';
+
+let express = require('express'); // import express framework
 let routes = require('./api/routes'); // import custom app routes
 let bodyParser = require('body-parser'); // requests body parser for express
 
-var app = express(); // express instance
+let app = express(); // express instance
 
 app.set('port', process.env.PORT || 5000); // port used by server, use from node environment or custom value
 

@@ -12,6 +12,9 @@
  * err     - db request error
  * context - db request data
  */
+
+'use strict';
+
 module.exports = (res, cb) => {
     return (err, context) => {
         if (err) {

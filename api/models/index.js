@@ -1,3 +1,5 @@
+'use strict';
+
 let dbManager = require('../db');
 
 // compile schema into model
