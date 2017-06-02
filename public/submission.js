@@ -33,7 +33,7 @@ class Submission {
 
     _loadEvents() {
         fetch(API_URL)
-            .then(response => response.json())
+            .then(checkStatus)
             .then(items => {
                 items.forEach(item => {
                     let dataModel = new DataModel(item.text, item.date);
@@ -45,7 +45,12 @@ class Submission {
     }
 
     _saveEvent(event) {
-        event.date = moment(event.date, TIME_FORMAT_DATETIME).format(TIME_FORMAT_DATETIME);
+        // clear errors
+        document.querySelectorAll("span.error").forEach(el => el.innerText = "");
+
+        if (event.date != null) {
+            event.date = moment(event.date, TIME_FORMAT_DATETIME).format(TIME_FORMAT_DATETIME);
+        }
 
         fetch(API_URL,
             {
@@ -55,12 +60,17 @@ class Submission {
                 },
                 body: JSON.stringify(event)
             })
-            .then(res => res.json())
+            .then(checkStatus)
             .then(data => {
                 toastr.success('Successfully saved event!');
                 this._clearForm();
             })
-            .catch(e => toastr.error('Error during event saving'))
+            .catch(errors => {
+                toastr.error('Error during event saving');
+                for (var key in errors) {
+                    document.querySelector(`.error.${key}`).innerText = errors[key];
+                }
+            })
     }
 
     _clearTable() {
@@ -135,5 +145,14 @@ class Submission {
 
             self._renderTable()
         })
+    }
+}
+
+function checkStatus(response) {
+    let json = response.json();
+    if (response.status >= 200 && response.status < 300) {
+        return json;
+    } else {
+        return json.then(Promise.reject.bind(Promise));
     }
 }

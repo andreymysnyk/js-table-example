@@ -18,10 +18,11 @@
 module.exports = (res, cb) => {
     return (err, context) => {
         if (err) {
-            res.status(err.statusCode || 502).send({
-                message: err.message, // db error message
-                errors: err.errors // db fields errors
-            });
+            var responseErrors = {};
+            for (var key in err.errors) {
+                responseErrors[key] = err.errors[key].message;
+            }
+            res.status(err.statusCode || 500).send(responseErrors);
         } else {
             cb(context);
         }
