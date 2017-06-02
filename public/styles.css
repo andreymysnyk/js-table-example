@@ -44,3 +44,7 @@
 .main .table-wrapper table th:nth-child(1) {
     width: 20%;
 }
+
+.navbar.theme-nav {
+    border-radius: 0;
+}
