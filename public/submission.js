@@ -32,7 +32,7 @@ class Submission {
             .then(response => response.json())
             .then(items => {
                 items.forEach(item => {
-                    let dataModel = new DataModel(item.name, item.date);
+                    let dataModel = new DataModel(item.text, item.date);
                     this.tasks.push(dataModel);
                     this._renderTable();
                 });
