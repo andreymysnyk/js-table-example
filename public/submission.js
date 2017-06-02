@@ -56,7 +56,10 @@ class Submission {
                 body: JSON.stringify(event)
             })
             .then(res => res.json())
-            .then(data => toastr.success('Successfully saved event!'))
+            .then(data => {
+                toastr.success('Successfully saved event!');
+                this._clearForm();
+            })
             .catch(e => toastr.error('Error during event saving'))
     }
 
@@ -64,6 +67,11 @@ class Submission {
         while(this.table.rows.length > 1) {
             this.table.deleteRow(1);
         }
+    }
+
+    _clearForm() {
+        document.querySelector("#text").value = "";
+        document.querySelector("#date").value = "";
     }
 
     _renderTable() {
