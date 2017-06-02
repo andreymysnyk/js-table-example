@@ -25,6 +25,10 @@ class Submission {
         this.map = new Map();
         this._setActions();
         this._loadEvents();
+
+        toastr.options = {
+            "positionClass": "toast-top-right"
+        };
     }
 
     _loadEvents() {
@@ -37,7 +41,7 @@ class Submission {
                     this._renderTable();
                 });
             })
-            .catch(e => console.log("Error: " + e));
+            .catch(e => toastr.error('Error during event saving: ' + e));
     }
 
     _saveEvent(event) {
@@ -52,8 +56,8 @@ class Submission {
                 body: JSON.stringify(event)
             })
             .then(res => res.json())
-            .then(data => alert("Saved event " + data._id))
-            .catch(e => console.log("Error: " + e))
+            .then(data => toastr.success('Successfully saved event!'))
+            .catch(e => toastr.error('Error during event saving'))
     }
 
     _clearTable() {
