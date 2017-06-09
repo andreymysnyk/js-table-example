@@ -25,11 +25,15 @@ class Submission {
         this.map = new Map();
         this._setActions();
         this._loadEvents();
+
+        toastr.options = {
+            "positionClass": "toast-top-right"
+        };
     }
 
     _loadEvents() {
         fetch(API_URL)
-            .then(response => response.json())
+            .then(checkStatus)
             .then(items => {
                 items.forEach(item => {
                     let dataModel = new DataModel(item.text, item.date);
@@ -37,11 +41,16 @@ class Submission {
                     this._renderTable();
                 });
             })
-            .catch(e => console.log("Error: " + e));
+            .catch(e => toastr.error('Error during event saving: ' + e));
     }
 
     _saveEvent(event) {
-        event.date = moment(event.date, TIME_FORMAT_DATETIME).format(TIME_FORMAT_DATETIME);
+        // clear errors
+        document.querySelectorAll("span.error").forEach(el => el.innerText = "");
+
+        if (event.date != null) {
+            event.date = moment(event.date, TIME_FORMAT_DATETIME).format(TIME_FORMAT_DATETIME);
+        }
 
         fetch(API_URL,
             {
@@ -51,15 +60,28 @@ class Submission {
                 },
                 body: JSON.stringify(event)
             })
-            .then(res => res.json())
-            .then(data => alert("Saved event " + data._id))
-            .catch(e => console.log("Error: " + e))
+            .then(checkStatus)
+            .then(data => {
+                toastr.success('Successfully saved event!');
+                this._clearForm();
+            })
+            .catch(errors => {
+                toastr.error('Error during event saving');
+                for (var key in errors) {
+                    document.querySelector(`.error.${key}`).innerText = errors[key];
+                }
+            })
     }
 
     _clearTable() {
         while(this.table.rows.length > 1) {
             this.table.deleteRow(1);
         }
+    }
+
+    _clearForm() {
+        document.querySelector("#text").value = "";
+        document.querySelector("#date").value = "";
     }
 
     _renderTable() {
@@ -123,5 +145,14 @@ class Submission {
 
             self._renderTable()
         })
+    }
+}
+
+function checkStatus(response) {
+    let json = response.json();
+    if (response.status >= 200 && response.status < 300) {
+        return json;
+    } else {
+        return json.then(Promise.reject.bind(Promise));
     }
 }

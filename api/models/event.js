@@ -7,7 +7,8 @@ let dbManager = require('../db');
 module.exports = new dbManager.db.Schema({
     text: {
         type: String,
-        required: true
+        required: true,
+        maxlength: 140
     },
     date: {
         type: Date,
