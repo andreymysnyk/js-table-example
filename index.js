@@ -1,8 +1,10 @@
 'use strict';
 
+let moment = require('moment');
 let express = require('express'); // import express framework
 let routes = require('./api/routes'); // import custom app routes
 let bodyParser = require('body-parser'); // requests body parser for express
+let validator = require('express-validator');
 
 let app = express(); // express instance
 
@@ -13,6 +15,15 @@ app.use(express.static(__dirname + '/public'));
 // uses middleware to handle the request body
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+app.use(validator());
+
+app.use(validator({
+    customValidators: {
+        isValidDate: function(date) {
+            return moment(date, 'YYYY-MM-DD HH:mm', true).isValid();
+        }
+    }
+}));
 
 // use base events route related to the /api/events uri
 app.use('/api/events', routes.events);

@@ -68,9 +68,15 @@ class Submission {
             })
             .catch(errors => {
                 toastr.error('Error during event saving');
-                for (var key in errors) {
-                    document.querySelector(`.error.${key}`).innerText = errors[key];
-                }
+                errors.forEach(error => {
+                    let errorElement = document.querySelector(`.error.${error.param}`);
+                    let errorsText = [error.msg];
+
+                    if (errorElement.innerText) {
+                        errorsText.push(errorElement.innerText);
+                    }
+                    errorElement.innerHTML = errorsText.join("<br/>");
+                });
             })
     }
 
