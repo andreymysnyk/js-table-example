@@ -23,8 +23,12 @@ function getList(req, res) {
  */
 function saveEvent(req, res) {
 
-    req.assert('text', '5 to 140 characters required for the event description').len(5, 140);
-    req.assert("date", "Date is not valid").isValidDate();
+    if (req.body.text) {
+        req.assert('text', '5 to 140 characters required for the event description').len(5, 140);
+    }
+    if (req.body.date) {
+        req.assert("date", "Date is not valid").isValidDate();
+    }
 
     req.assert('text', 'Text is required').notEmpty();
     req.assert("date", "Date is requried").notEmpty();
