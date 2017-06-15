@@ -44,7 +44,7 @@ class Submission {
             .catch(e => toastr.error('Error during event saving: ' + e));
     }
 
-    _saveEvent(event) {
+    _saveEvent(event, callback) {
         // clear errors
         document.querySelectorAll("span.error").forEach(el => el.innerText = "");
 
@@ -62,14 +62,21 @@ class Submission {
             })
             .then(checkStatus)
             .then(data => {
+                callback();
                 toastr.success('Successfully saved event!');
                 this._clearForm();
             })
             .catch(errors => {
                 toastr.error('Error during event saving');
-                for (var key in errors) {
-                    document.querySelector(`.error.${key}`).innerText = errors[key];
-                }
+                errors.forEach(error => {
+                    let errorElement = document.querySelector(`.error.${error.param}`);
+                    let errorsText = [error.msg];
+
+                    if (errorElement.innerText) {
+                        errorsText.push(errorElement.innerText);
+                    }
+                    errorElement.innerHTML = errorsText.join("<br/>");
+                });
             })
     }
 
@@ -80,8 +87,9 @@ class Submission {
     }
 
     _clearForm() {
-        document.querySelector("#text").value = "";
-        document.querySelector("#date").value = "";
+        $("#text").val("");
+        $("#date").val("");
+        $('#datetimepicker').data("DateTimePicker").clear();
     }
 
     _renderTable() {
@@ -140,10 +148,10 @@ class Submission {
             let date = $('#datetimepicker').data("DateTimePicker").date();
             let dataModel = new DataModel(text, date);
 
-            self.tasks.push(dataModel);
-            self._saveEvent(dataModel);
-
-            self._renderTable()
+            self._saveEvent(dataModel, () => {
+                self.tasks.push(dataModel);
+                self._renderTable();
+            });
         })
     }
 }

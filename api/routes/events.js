@@ -23,6 +23,22 @@ function getList(req, res) {
  */
 function saveEvent(req, res) {
 
+    if (req.body.text) {
+        req.assert('text', '5 to 140 characters required for the event description').len(5, 140);
+    }
+    if (req.body.date) {
+        req.assert("date", "Date is not valid").isValidDate();
+    }
+
+    req.assert('text', 'Text is required').notEmpty();
+    req.assert("date", "Date is requried").notEmpty();
+
+    var errors = req.validationErrors();
+    if (errors) {
+        res.status(500).send(errors);
+        return;
+    }
+
     // get variables from request body
     let name = req.body.text;
     let date = req.body.date;
