@@ -12,8 +12,7 @@
     "type": "git",
     "url": "git+https://github.com/andreymysnyk/js-table-example.git"
   },
-  "keywords": [
-  ],
+  "keywords": [],
   "author": "andrey",
   "license": "ISC",
   "bugs": {
@@ -24,10 +23,11 @@
     "node": "5.10.0"
   },
   "dependencies": {
-    "express": "^4.14.1",
-    "mongoose": ">=4.1.11",
     "body-parser": "~1.0.1",
     "bower": "1.8.0",
-    "moment": "^2.18.1"
+    "express": "^4.14.1",
+    "express-validator": "^3.2.0",
+    "moment": "^2.18.1",
+    "mongoose": ">=4.1.11"
   }
 }

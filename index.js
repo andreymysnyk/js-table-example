@@ -15,8 +15,6 @@ app.use(express.static(__dirname + '/public'));
 // uses middleware to handle the request body
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-app.use(validator());
-
 app.use(validator({
     customValidators: {
         isValidDate: function(date) {
