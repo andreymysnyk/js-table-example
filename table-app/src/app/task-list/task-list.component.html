@@ -7,8 +7,8 @@
     </thead>
     <tbody>
         <tr *ngFor="let task of tasks">
-            <td>{{task.date}}</td>
-            <td>{{task.text}}</td>
+            <td>{{ task.date | amUtc | amDateFormat: 'YYYY-MM-DD' }}</td>
+            <td>{{ task.date | amUtc | amDateFormat: 'HH:mm' }} - {{task.text}}</td>
         </tr>
     </tbody>
 </table>
