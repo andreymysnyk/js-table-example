@@ -2,8 +2,7 @@ import { Component, OnInit, ViewChild, NgModule } from '@angular/core';
 import { Task } from '../task';
 import { FormsModule, NgForm }  from '@angular/forms';
 import { TasksService } from '../tasks.service';
-import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
-import {NgbDateStruct} from '@ng-bootstrap/ng-bootstrap';
+import { NgbDateStruct, NgbTimeStruct } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-task-form',
@@ -12,28 +11,38 @@ import {NgbDateStruct} from '@ng-bootstrap/ng-bootstrap';
   providers: [TasksService]
 })
 @NgModule({
-  imports: [ FormsModule, NgbModule.forRoot()]
+  imports: [ FormsModule ]
 })
 
 export class TaskFormComponent implements OnInit {
     eventForm: NgForm;
     @ViewChild('eventForm') currentForm: NgForm;
     task: Task;
-    model: NgbDateStruct;
-    date: {year: number, month: number};
-    time = {hour: 13, minute: 30};
+    date: NgbDateStruct;
+    time: NgbTimeStruct;
 
     constructor(private tasksService: TasksService) {
+    }
+
+    dateFormat(date: Date, format: string) {
+        format = format.replace("DD", (date.getDate() < 10 ? '0' : '') + date.getDate());
+        format = format.replace("MM", (date.getMonth() < 9 ? '0' : '') + (date.getMonth() + 1));
+        format = format.replace("YYYY", date.getFullYear().toString());
+        format = format.replace("HH", (date.getHours() < 10 ? '0' : '') + date.getHours());
+        format = format.replace("mm", (date.getMinutes() < 10 ? '0' : '') + date.getMinutes());
+        return format;
     }
 
     onSubmit() {
       const form = this.currentForm.form;
 
       if (form.valid) {
-          const date = form.value.date;
-          const text = form.value.text;
 
-          this.tasksService.saveTask(form.value).subscribe(data => console.log(data),
+          let postDate = new Date(this.date.year, this.date.month - 1, this.date.day, this.time.hour, this.time.minute, this.time.second);
+
+          this.task.date = this.dateFormat(postDate, "YYYY-MM-DD HH:mm");
+
+          this.tasksService.saveTask(this.task).subscribe(data => console.log(data),
               error => {
                   console.log(error)
               }

@@ -18,8 +18,8 @@ export class TasksService {
         .catch(this.handleError);
   }
 
-  saveTask(body) {
-    return this.http.post(this.apiURL, body)
+  saveTask(task: Task) {
+    return this.http.post(this.apiURL, task)
   }
 
   private handleError(error: any): Promise<any> {

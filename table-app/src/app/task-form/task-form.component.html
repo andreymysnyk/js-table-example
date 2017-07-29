@@ -2,12 +2,12 @@
     <div class="form-group">
         <div class="input-group">
             <input class="form-control" placeholder="yyyy-mm-dd"
-                   name="taskDate" [(ngModel)]="model" ngbDatepicker #d="ngbDatepicker">
+                   name="taskDate" [(ngModel)]="date" ngbDatepicker #d="ngbDatepicker" required>
             <div class="input-group-addon" (click)="d.toggle()" >
                 <img src="assets/img/calendar-icon.svg" style="width: 1.2rem; height: 1rem; cursor: pointer;"/>
             </div>
         </div>
-        <ngb-timepicker [(ngModel)]="time" name="taskTime"></ngb-timepicker>
+        <ngb-timepicker [(ngModel)]="time" name="taskTime" required></ngb-timepicker>
     </div>
     <div *ngIf="formErrors.date" class="alert alert-danger">
         {{ formErrors.date }}
