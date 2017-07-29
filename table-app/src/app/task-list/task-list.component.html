@@ -1,0 +1,14 @@
+<table id="resultTable" class="table table-bordered table-striped">
+    <thead>
+    <tr>
+        <th>Date</th>
+        <th>Text</th>
+    </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let task of tasks">
+            <td>{{task.date}}</td>
+            <td>{{task.text}}</td>
+        </tr>
+    </tbody>
+</table>
