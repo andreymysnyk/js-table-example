@@ -3,6 +3,7 @@ import { Task } from '../task';
 import { FormsModule, NgForm }  from '@angular/forms';
 import { TasksService } from '../tasks.service';
 import { NgbDateStruct, NgbTimeStruct } from '@ng-bootstrap/ng-bootstrap';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-task-form',
@@ -15,6 +16,7 @@ import { NgbDateStruct, NgbTimeStruct } from '@ng-bootstrap/ng-bootstrap';
 })
 
 export class TaskFormComponent implements OnInit {
+    TIME_FORMAT_DATETIME = "YYYY-MM-DD HH:mm";
     eventForm: NgForm;
     @ViewChild('eventForm') currentForm: NgForm;
     task: Task;
@@ -24,15 +26,6 @@ export class TaskFormComponent implements OnInit {
     constructor(private tasksService: TasksService) {
     }
 
-    dateFormat(date: Date, format: string) {
-        format = format.replace("DD", (date.getDate() < 10 ? '0' : '') + date.getDate());
-        format = format.replace("MM", (date.getMonth() < 9 ? '0' : '') + (date.getMonth() + 1));
-        format = format.replace("YYYY", date.getFullYear().toString());
-        format = format.replace("HH", (date.getHours() < 10 ? '0' : '') + date.getHours());
-        format = format.replace("mm", (date.getMinutes() < 10 ? '0' : '') + date.getMinutes());
-        return format;
-    }
-
     onSubmit() {
       const form = this.currentForm.form;
 
@@ -40,7 +33,7 @@ export class TaskFormComponent implements OnInit {
 
           let postDate = new Date(this.date.year, this.date.month - 1, this.date.day, this.time.hour, this.time.minute, this.time.second);
 
-          this.task.date = this.dateFormat(postDate, "YYYY-MM-DD HH:mm");
+          this.task.date = moment(postDate).format(this.TIME_FORMAT_DATETIME);
 
           this.tasksService.saveTask(this.task).subscribe(data => console.log(data),
               error => {
