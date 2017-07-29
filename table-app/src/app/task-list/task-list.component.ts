@@ -22,4 +22,9 @@ export class TaskListComponent implements OnInit {
   getTasks(): void {
     this.tasksService.getTasks().then(tasks => this.tasks = tasks);
   }
+
+  onSave(task: Task) {
+    //TODO
+    console.log(task)
+  }
 }

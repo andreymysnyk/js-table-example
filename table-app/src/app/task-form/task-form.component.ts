@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, NgModule } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, ViewChild, NgModule } from '@angular/core';
 import { Task } from '../task';
 import { FormsModule, NgForm }  from '@angular/forms';
 import { TasksService } from '../tasks.service';
@@ -22,6 +22,7 @@ export class TaskFormComponent implements OnInit {
     task: Task;
     date: NgbDateStruct;
     time: NgbTimeStruct;
+    @Output() onSave = new EventEmitter<Task>();
 
     constructor(private tasksService: TasksService) {
     }
@@ -35,7 +36,9 @@ export class TaskFormComponent implements OnInit {
 
           this.task.date = moment(postDate).format(this.TIME_FORMAT_DATETIME);
 
-          this.tasksService.saveTask(this.task).subscribe(data => console.log(data),
+          this.tasksService.saveTask(this.task).subscribe(data => {
+                this.onSave.emit(this.task);
+              },
               error => {
                   console.log(error)
               }

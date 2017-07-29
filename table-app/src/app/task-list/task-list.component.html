@@ -1,7 +1,7 @@
 <div class="main-content">
     <div class="form-wrapper">
         <div class="form-container">
-            <app-task-form></app-task-form>
+            <app-task-form (onSave)="onSave($event)"></app-task-form>
         </div>
     </div>
     <div class="table-wrapper">
