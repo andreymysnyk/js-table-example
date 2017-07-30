@@ -1,9 +1,11 @@
-import { Component, EventEmitter, OnInit, Output, ViewChild, NgModule } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, ViewChild, NgModule, ViewContainerRef } from '@angular/core';
 import { Task } from '../task';
 import { FormsModule, NgForm }  from '@angular/forms';
 import { TasksService } from '../tasks.service';
 import { NgbDateStruct, NgbTimeStruct } from '@ng-bootstrap/ng-bootstrap';
 import * as moment from 'moment';
+import { ToastsManager } from 'ng2-toastr/ng2-toastr';
+import { ToastModule } from 'ng2-toastr/ng2-toastr';
 
 @Component({
   selector: 'app-task-form',
@@ -12,7 +14,7 @@ import * as moment from 'moment';
   providers: [TasksService]
 })
 @NgModule({
-  imports: [ FormsModule ]
+  imports: [ FormsModule, ToastModule.forRoot() ]
 })
 
 export class TaskFormComponent implements OnInit {
@@ -24,7 +26,8 @@ export class TaskFormComponent implements OnInit {
     time: NgbTimeStruct;
     @Output() onSave = new EventEmitter<Task>();
 
-    constructor(private tasksService: TasksService) {
+    constructor(private tasksService: TasksService, private toastr: ToastsManager, vcr: ViewContainerRef) {
+        this.toastr.setRootViewContainerRef(vcr);
     }
 
     onSubmit() {
@@ -38,9 +41,10 @@ export class TaskFormComponent implements OnInit {
 
           this.tasksService.saveTask(this.task).subscribe(data => {
                 this.onSave.emit(this.task);
+                this.toastr.success('Task was successfully saved');
               },
               error => {
-                  console.log(error)
+                this.toastr.error('Error: Task was not saved!');
               }
           )
       }
