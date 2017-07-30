@@ -13,9 +13,13 @@
             </tr>
             </thead>
             <tbody>
-            <tr *ngFor="let task of tasks">
-                <td>{{ task.date | amUtc | amDateFormat: 'YYYY-MM-DD' }}</td>
-                <td>{{ task.date | amUtc | amDateFormat: 'HH:mm' }} - {{task.text}}</td>
+            <tr *ngFor="let item of list">
+                <td>{{ item.date | amUtc | amDateFormat: 'YYYY-MM-DD' }}</td>
+                <td>
+                    <div *ngFor="let task of item.tasks">
+                      - {{ task.text }}
+                    </div>
+                </td>
             </tr>
             </tbody>
         </table>

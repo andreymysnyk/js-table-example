@@ -17,6 +17,7 @@ export class TaskListComponent implements OnInit {
 
   tasks: Task[];
   map = new Map();
+  list = [];
 
   constructor(private tasksService: TasksService) {
   }
@@ -34,6 +35,7 @@ export class TaskListComponent implements OnInit {
 
   onSave(task: Task) {
     this.tasks.push(task);
+    this._setMap()
   }
 
   static _sortEvents(a,b) {
@@ -59,6 +61,9 @@ export class TaskListComponent implements OnInit {
       this.map.set(dateKey, currentTasks);
     });
 
-    console.log(this.map);
+    this.list = [];
+    this.map.forEach( (tasks, date, map) => {
+        this.list.splice( 0, 0, { date: date, tasks: tasks } );
+    });
   }
 }
