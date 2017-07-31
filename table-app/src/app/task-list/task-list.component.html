@@ -13,12 +13,14 @@
             </tr>
             </thead>
             <tbody>
-            <tr *ngFor="let item of list">
-                <td>{{ item.date | amUtc | amDateFormat: 'YYYY-MM-DD' }}</td>
+            <tr *ngFor="let item of dates">
+                <td>{{ item | amDateFormat: 'YYYY-MM-DD' }}</td>
                 <td>
-                    <div *ngFor="let task of item.tasks">
-                      - {{ task.text }}
-                    </div>
+                    <ul>
+                        <li *ngFor="let taskItem of map.get(item)">
+                            {{ taskItem.date | amDateFormat: 'HH:mm' }} {{ taskItem.text }}
+                        </li>
+                    </ul>
                 </td>
             </tr>
             </tbody>

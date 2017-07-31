@@ -35,3 +35,13 @@ body {
     right:0;
     bottom: 45px; /* footer height + 10 */
 }
+ul {
+    list-style-position: inside;
+}
+
+span.calendar {
+    background-image: url("assets/img/calendar-icon.svg");
+    width: 1.2rem;
+    height: 1rem;
+    cursor: pointer;
+}

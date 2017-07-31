@@ -40,11 +40,12 @@ export class TaskFormComponent implements OnInit {
           this.task.date = moment(postDate).format(this.TIME_FORMAT_DATETIME);
 
           this.tasksService.saveTask(this.task).subscribe(data => {
-                this.onSave.emit(this.task);
+                this.onSave.emit(this.task); // send event to the parent component
                 this.toastr.success('Task was successfully saved');
+                this.currentForm.reset()
               },
               error => {
-                this.toastr.error('Error: Task was not saved!');
+                this.toastr.error(`Error: Task was not saved! ${error}`);
               }
           )
       }

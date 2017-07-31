@@ -11,13 +11,11 @@ import * as moment from 'moment';
 })
 export class TaskListComponent implements OnInit {
 
-  TIME_FORMAT_TIME = "HH:mm";
-  TIME_FORMAT_DATETIME = "YYYY-MM-DD HH:mm";
   TIME_FORMAT_DATE = "YYYY-MM-DD";
 
   tasks: Task[];
   map = new Map();
-  list = [];
+  dates = [];
 
   constructor(private tasksService: TasksService) {
   }
@@ -34,7 +32,9 @@ export class TaskListComponent implements OnInit {
   }
 
   onSave(task: Task) {
-    this.tasks.push(task);
+    // copy obj to avoid binding
+    let newTask = Object.assign({}, task);
+    this.tasks.push(newTask);
     this._setMap()
   }
 
@@ -43,27 +43,27 @@ export class TaskListComponent implements OnInit {
   }
 
   _setMap() {
+    this.map.clear();
+    this.dates = [];
+
     // sort tasks
     this.tasks = this.tasks.sort(TaskListComponent._sortEvents);
 
     this.tasks.forEach(task => {
 
       // get date key
-      let dateKey = moment(task.date, this.TIME_FORMAT_DATETIME).format(this.TIME_FORMAT_DATE);
+      let dateKey = moment(task.date).format(this.TIME_FORMAT_DATE);
 
       // get tasks list for date, append
       let currentTasks = this.map.get(dateKey);
-
       currentTasks = currentTasks || [];
       currentTasks.push(task);
-
-      // set again
       this.map.set(dateKey, currentTasks);
-    });
 
-    this.list = [];
-    this.map.forEach( (tasks, date, map) => {
-        this.list.splice( 0, 0, { date: date, tasks: tasks } );
+      // add to the dates array
+      if (!this.dates.includes(dateKey)) {
+        this.dates = [dateKey].concat(this.dates);
+      }
     });
   }
 }
