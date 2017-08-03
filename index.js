@@ -11,7 +11,7 @@ let app = express(); // express instance
 app.set('port', process.env.PORT || 5000); // port used by server, use from node environment or custom value
 
 // site assets
-app.use(express.static(__dirname + '/public'));
+app.use(express.static(__dirname + '/table-app/dist'));
 // uses middleware to handle the request body
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
