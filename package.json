@@ -20,7 +20,7 @@
   },
   "homepage": "",
   "engines": {
-    "node": "5.10.0"
+    "node": "8.1.4"
   },
   "dependencies": {
     "body-parser": "~1.0.1",
