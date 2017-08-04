@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node index.js",
-    "postinstall": "bower install && cd table-app && ng build -prod -aot false"
+    "postinstall": "cd table-app && npm install && ng build -prod -aot false"
   },
   "repository": {
     "type": "git",
@@ -29,7 +29,6 @@
     "express": "^4.14.1",
     "express-validator": "^3.2.0",
     "moment": "^2.18.1",
-    "mongoose": ">=4.1.11",
-    "@angular/cli": "1.2.7"
+    "mongoose": ">=4.1.11"
   }
 }
