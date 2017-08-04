@@ -7,7 +7,7 @@ import { Task } from './task'
 @Injectable()
 export class TasksService {
 
-  private apiURL = 'http://localhost:5000/api/events';  // URL to web api
+  private apiURL = '/api/events';  // URL to web api
 
   constructor(private http: Http) { }
 
