@@ -1,0 +1,27 @@
+<form #eventForm="ngForm" id="addRow" class="forms" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+        <div class="input-group">
+            <input class="form-control" placeholder="yyyy-mm-dd"
+                   name="taskDate" [(ngModel)]="date" ngbDatepicker #d="ngbDatepicker" required>
+            <div class="input-group-addon" (click)="d.toggle()" >
+                <span class="calendar"></span>
+            </div>
+        </div>
+        <ngb-timepicker [(ngModel)]="time" name="taskTime" required></ngb-timepicker>
+    </div>
+    <div *ngIf="formErrors.date" class="alert alert-danger">
+        {{ formErrors.date }}
+    </div>
+    <div class="form-group">
+        <label for="text">Event</label>
+        <textarea #text="ngModel" id="text" rows="5" class="form-control"
+                  required minlength="5" maxlength="140"
+                  [(ngModel)]="task.text" name="text"></textarea>
+    </div>
+    <div *ngIf="formErrors.text" class="alert alert-danger">
+        {{ formErrors.text }}
+    </div>
+    <div class="center">
+        <button type="submit" class="btn btn-primary" [disabled]="!eventForm.form.valid">Add event</button>
+    </div>
+</form>

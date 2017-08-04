@@ -1,0 +1,47 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+html,
+body {
+    position: relative;
+    height: 100%;
+    width: 100%;
+}
+.main-content {
+    padding-top: 16px;
+}
+.footer {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 35px;
+    line-height: 35px;
+    background-color: #333;
+    color: #9d9d9d;
+    text-align: center;
+}
+
+.main .form-wrapper {
+    width: 30%;
+    padding: 0 20px;
+}
+.table-wrapper {
+    overflow: auto;
+    position: absolute;
+    width: 70%;
+    top: 70px;
+    right:0;
+    bottom: 45px; /* footer height + 10 */
+}
+ul {
+    list-style-position: inside;
+}
+
+span.calendar {
+    background-image: url("assets/img/calendar-icon.svg");
+    width: 1.2rem;
+    height: 1rem;
+    cursor: pointer;
+}
